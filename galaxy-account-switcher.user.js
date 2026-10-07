@@ -8,11 +8,16 @@
 // @icon         https://galaxy.mobstudio.ru/web/assets/icon64.png
 // @grant        none
 // @run-at       document-idle
+// @noframes
 // @license      MIT
 // ==/UserScript==
 
 (function () {
     'use strict';
+
+    if (window.top !== window.self) return;
+    if (window.__galaxySwitcherLoaded) return;
+    window.__galaxySwitcherLoaded = true;
 
     const COOKIE = 'client';
 
@@ -62,7 +67,7 @@
     }
 
     function buildPanel() {
-        document.getElementById('galaxy-acc-panel')?.remove();
+        document.querySelectorAll('#galaxy-acc-panel').forEach(el => el.remove());
 
         const data = getData();
         if (!data || !data.users || !data.users.byId) return;
